@@ -1,0 +1,93 @@
+﻿@page "/movies/search"
+@inject IRepository repository
+
+<h3>Buscar Película</h3>
+
+<div class="form-inline">
+    <div class="form-group mb-2">
+        <label for="tilte" class="sr-only">Titulo</label>
+        <input type="text" class="form-control" id="title" placeholder="Tiulo de la Película ... "
+               @bind-value="titulo" @bind-value:event="oninput"
+               @onkeypress="@( (KeyboardEventArgs e) => TituloKeyPRess(e) )" />
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <select class="form-control" @bind="selectedGenere">
+            <option value="0">
+                --Elegí un Genero--
+            </option>
+            @foreach (var genere in Generes)
+            {
+                <option value="@genere.Id">@genere.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="porEstrenar" class="form-check-label">Por Estrenarse</label>
+        <input type="checkbox" class="form-check-input" id="porEstrenar" @bind="porEstrenarse" />
+
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="enSalas" class="form-check-label">En Salas</label>
+        <input type="checkbox" class="form-check-input" id="enSalas" @bind="enSalas" />
+
+    </div>
+
+    <button type="button" class="btn btn-primary mb-2 mx-sm-3" @onclick="BuscarPelicula">Buscar</button>
+    <button type="button" class="btn btn-info mb-2" @onclick="ResetFilters">Reset</button>
+</div>
+<MoviesList Movies="movies" />
+
+@code {
+    private List<Movie> movies;
+    string titulo = "";
+    string selectedGenere = "";
+
+    private List<Genere> Generes = new List<Genere>() {
+            new Genere() { Id = 1, Nombre = "Acción" },
+            new Genere() { Id = 2, Nombre = "Comedia" }};
+
+    bool porEstrenarse = false;
+    bool enSalas = false;
+
+    protected override void OnInitialized()
+
+    {
+
+        movies = repository.GetMovies();
+        Console.WriteLine("State:" + movies[0].IsReleased());
+
+
+    }
+
+    private void BuscarPelicula()
+    {
+
+        movies = repository.GetMovies().Where(x => x.Titulo.Contains(titulo)).ToList();
+
+        Console.WriteLine($"titulo:{titulo}");
+        Console.WriteLine($"selectedGenere:{selectedGenere}");
+        Console.WriteLine($"porEstrenarse:{porEstrenarse}");
+        Console.WriteLine($"enSalas:{enSalas}");
+
+    }
+    private void ResetFilters()
+    {
+        movies = repository.GetMovies();
+        titulo = "";
+        selectedGenere = "";
+        porEstrenarse = false;
+        enSalas = false;
+
+    }
+
+    private void TituloKeyPRess(KeyboardEventArgs e)
+    {
+
+        if (e.Key == "Enter")
+        {
+            BuscarPelicula();
+        }
+    }
+
+
+}

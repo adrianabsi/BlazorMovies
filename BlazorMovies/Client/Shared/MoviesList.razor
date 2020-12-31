@@ -1,0 +1,45 @@
+﻿@inject IJSRuntime js
+<p>
+    @if (strTitulo != "")
+    {<h2>@strTitulo</h2>}
+</p>
+
+<div class="movies-list-container">
+
+
+    <GenericList List="Movies">
+        <ElementTemplate Context="movie">
+            <MovieItemrazor iMovie="movie" QuitarPelicula="QuitarPelicula" />
+        </ElementTemplate>
+    </GenericList>
+</div>
+
+
+@code {
+    Confirmation confirmacion;
+    [Parameter] public List<Movie> Movies { get; set; }
+
+    [Parameter] public string strTitulo { get; set; }
+
+    
+
+
+
+    private async void QuitarPelicula(Movie movie)
+    {
+
+        var confirmed = await js.Confirm($"Está seguro que quiere quiar la pelicula {movie.Titulo}?");
+        if (confirmed)
+        {
+            Movies.Remove(movie);
+        }
+    }
+
+
+
+
+
+
+}
+
+

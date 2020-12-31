@@ -1,0 +1,32 @@
+﻿<div class="item-movie-container">
+    <a href="@movieURL">
+        <img src="@iMovie.Poster" alt="Poster" class="movie-poster" title="@iMovie.Titulo"/>
+    </a>
+    <p>
+        <a href="@movieURL">
+            @iMovie.TituloCorto
+        </a>
+    </p>
+    
+    <div>
+        <a class="btn btn-info">Editar</a>
+        <button class="btn btn-danger" type="button"
+                @onclick="@(() => QuitarPelicula.InvokeAsync(iMovie))">Quitar
+        </button>
+    </div>
+         
+</div>
+
+@code {
+    [Parameter] public Movie iMovie { get; set; }
+    [Parameter] public EventCallback<Movie> QuitarPelicula { get; set; }
+    private string movieURL { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+   
+        movieURL = $"/movie/{iMovie.Id}/{iMovie.Titulo.Replace(" ", "-")}";
+    }
+
+
+}

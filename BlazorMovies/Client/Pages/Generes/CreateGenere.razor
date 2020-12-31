@@ -1,0 +1,19 @@
+﻿@*@page "/genere/create/{GenerId:int}"*@
+@page  "/genere/create/"
+<h3>Generos</h3>
+
+<GenereForm OnValidSubmit="Create" Genere="genere" />
+
+
+@code {
+
+    private Genere genere= new Genere();
+    //[Parameter] public int GenerId { get; set; }
+
+    private void Create()
+    {
+        Console.WriteLine("Create");
+        Console.WriteLine("Genero: " + genere.Nombre);
+    }
+
+}

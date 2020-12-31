@@ -1,0 +1,63 @@
+﻿
+<EditForm Model="Person" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Person.Nombre" />
+            <ValidationMessage For="@(() => Person.Nombre)" />
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label for="fecha">Fecha de Nacimiento</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Person.FechaNacimiento" />
+            <ValidationMessage For="@(() => Person.FechaNacimiento)" />
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <InputImg Label="Foto de Perfil" OnSelectedImage="ShowPicture" ImageURL="@imgURL" />
+
+    </div>
+
+    <div class="from-group form-markdown">
+        <InputMarkDown @bind-Value="Person.Biografia"
+                       Label="Biografía"
+                       For="(()=> Person.Biografia)"
+
+                       />
+
+
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+
+</EditForm>
+
+@code {
+    [Parameter] public Person Person { get; set; }
+
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    string imgURL;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(Person.Foto))
+        {
+            imgURL = Person.Foto;
+            Person.Foto = null;
+        }
+    }
+
+    private void ShowPicture(string imgBase64)
+    {
+        Person.Foto = imgBase64;
+        imgURL = null;  
+    }
+}

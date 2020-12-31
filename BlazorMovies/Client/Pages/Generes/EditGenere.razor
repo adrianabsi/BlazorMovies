@@ -1,0 +1,28 @@
+﻿@page "/genere/edit/{GenereId:int}"
+
+<h3>Editar Generos</h3>
+
+@if (genere != null)
+{
+    <GenereForm Genere="genere" OnValidSubmit="Update"/>
+}
+
+@code {
+
+
+    [Parameter] public int GenereId { get; set; }
+
+    public Genere genere;
+
+    protected override void OnInitialized()
+    {
+        genere = new Genere() { Id = GenereId, Nombre = "Romantico" };
+    }
+
+    private void Update()
+    {
+        Console.WriteLine("Create");
+        Console.WriteLine("Genero " + genere.Nombre);
+    }
+}
+

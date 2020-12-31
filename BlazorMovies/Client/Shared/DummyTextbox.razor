@@ -1,0 +1,8 @@
+﻿<input type="text" @attributes="PropiedadesInput"/> @*@atributes lo que hace es aplanar la coleccion y se aplican como propiedades aca*@
+
+@code {
+    [Parameter (CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> PropiedadesInput { get; set; }
+    // IDictionary es un diccionario de Pares de claves y valores. El CaptureUnmatchedValue slo que hace
+    //es atajar en este parametro los parametros que no tengan un Nombre que Matchee con otros parametros. Estos son parametros arbitrarios
+}

@@ -1,0 +1,18 @@
+﻿@page "/movie/{MovieId:int}"
+@page "/movie/{MovieId:int}/{MovieName}"
+@*//si es stroing no se pone : tipo*@
+<h3>DetailsMovie</h3>
+
+@code {
+
+    [Parameter] public int MovieId { get; set; }
+    [Parameter] public string MovieName{ get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"Id de La Peli: {MovieId}");
+        Console.WriteLine($"Nombre de La Peli: {MovieName}");
+
+    }
+
+}

@@ -1,0 +1,40 @@
+﻿.item-movie-container {
+    margin-right: 2%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.movie-poster {
+    width: 225px;
+    height: 300px;
+}
+
+.item-movie-container p {
+    max-width: 225px;
+    height: 44px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.movies-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.form-markdown {
+    display: flex !important;
+}
+
+    .form-markdown textarea {
+        width: 500px;
+        height: 500px;
+        margin-right: 15px;
+        font-size: 50px;
+    }
+
+    .form-markdown .markdown-container {
+        border: 1px dashed black;
+        width: 500px;
+        height: 500px;
+    }

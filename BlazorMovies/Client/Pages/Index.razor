@@ -1,0 +1,28 @@
+﻿@page "/"
+
+@inject IRepository repository
+<div>
+      <MoviesList Movies="movies" strTitulo="Películas" />
+          
+</div>
+
+
+
+
+@code{
+    private List<Movie> movies;
+    protected override void OnInitialized()
+
+    {
+        
+
+        movies = repository.GetMovies();
+        
+
+
+    }
+
+
+
+}
+

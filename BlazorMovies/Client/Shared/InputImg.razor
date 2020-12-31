@@ -1,0 +1,53 @@
+﻿
+
+<div>
+    <label>@Label</label>
+    <div>
+        <InputFile accept=".jpg,.jpeg,.png" OnChange="OnChange"  />
+    </div>
+</div>
+<div>
+    @if (imgBae64 != null)
+    {
+        <div style="margin:10px;">
+            <img src="data:image/jpeg;charset=utf-8;base64, @imgBae64" style="width:400px;" />
+        </div>
+    }
+    @if (ImageURL != null)
+    {
+        <div style="margin:10px;">
+            <img src="@ImageURL" style="width:400px;" />
+        </div>
+    }
+
+</div>
+@code {
+    [Parameter] public string Label { get; set; }
+    [Parameter] public EventCallback<string> OnSelectedImage { get; set; }
+    [Parameter] public string ImageURL { get; set; }
+
+    private string imgBae64;
+
+    async Task OnChange(InputFileChangeEventArgs e)
+    {
+        var imagesFiles = e.GetMultipleFiles();
+
+        foreach(var imgFile in imagesFiles)
+        {
+            var buffer = new byte[imgFile.Size];
+
+            await imgFile.OpenReadStream().ReadAsync(buffer);
+
+            imgBae64 = Convert.ToBase64String(buffer);
+
+            Console.WriteLine(imgBae64);
+
+            await OnSelectedImage.InvokeAsync(imgBae64); //Ejecutamos el callback
+
+            ImageURL = null; // si selecciona una imagen nueva limpio la del parametro de la imagen preexistente
+
+            StateHasChanged();
+        }
+
+    }
+}

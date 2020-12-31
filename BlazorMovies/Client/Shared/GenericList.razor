@@ -1,0 +1,59 @@
+﻿@typeparam TItem
+@*Con esto definimos un parametro de tipo generico, Puede ser un Objeto o un String, cualquier cosa*@
+
+@if (List == null)
+{
+
+
+    if (NullTemplate != null)
+    {
+
+        @NullTemplate
+
+    }
+    else
+    {
+        <img src="https://i.pinimg.com/originals/f9/41/ae/f941ae9d16fd7d2957eea6e5b1100d1e.gif" />
+    }
+
+}
+else if (List.Count == 0)
+{
+    if (EmptyTemplate != null)
+    {
+        @EmptyTemplate
+    }
+    else
+    {
+       <text> No hay Peliculas para mostrar </text>
+
+    }
+}
+else
+{
+    @foreach (var element in List)
+    {
+        @ElementTemplate(element)
+    }
+
+}
+
+
+@code {
+
+    [Parameter] public RenderFragment NullTemplate { get; set; } //Aca se pasa el codigo  renderizar
+
+    [Parameter] public RenderFragment EmptyTemplate { get; set; } //Aca se pasa el codigo a Renderizar Son Fragmetos de HTML
+
+    [Parameter] public RenderFragment<TItem> ElementTemplate { get; set; }
+
+    [Parameter] public List<TItem> List { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        
+            Console.WriteLine("Generic List: ");
+        
+    }
+
+}
